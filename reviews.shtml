@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>KC Perl Mongers - Reviews</title>
+  <link rel="stylesheet" href="kcpm.css" type="text/css">
+  <!--#include virtual="meta_tags" -->
+</head>
+<body>
+<table class="doc_frame" width=650>
+<tr><td><!--#include virtual="header.shtml"--></td></tr>
+<tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+<tr><td>
+  <table><tr>
+  <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+  <td class="text_frame"><div class="text_frame">
+
+    <h1><a name="done">Book Reviews</a></h1>
+
+    <p class="leading">Book reviews are occasionally featured at our
+    meetings. When available, we'll link to a copy of the review or
+    related posting to the mailing list here. If you're interested in
+    reviewing a book for the group, please do. You can probably get a
+    free copy of the book for a few minutes' work.</p>
+
+    <ul>
+
+    <li><a href="http://mail.pm.org/pipermail/kc/2007-October/000827.html">Learning Perl 4th Edition</a>
+    reviewed by Jonathan C. Otsuka</li>
+        <li><a href="http://mail.pm.org/pipermail/kc/2006-June/000446.html">Statistics Hacks by Bruce Frey</a>
+	from David Nichol</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-August/000150.html"
+          >Digital Video Pocket Guide</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-July/000124.html"
+          >Dynamic HTML</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-April/000092.html"
+          >Embedding Perl in HTML with Mason</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-March/000079.html"
+          >Extending and Embedding Perl</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-January/000028.html"
+          >Mastering Algorithms with Perl</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-April/000095.html"
+          >Object Oriented Programming with Perl</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-April/000093.html"
+          >Official Guide to Programming with CGI.pm</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-July/000122.html"
+          >Perl & XML</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-March/000080.html"
+          >Programming Web Services with Perl</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-July/000125.html"
+          >Safari Bookshelf</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-July/000123.html"
+          >Web Development with Apache and Perl</a></li>
+      <li><a href="http://mail.pm.org/pipermail/kc/2003-April/000091.html"
+          >Writing Apache Module with Perl and C</a></li>
+    </ul>
+
+  </div></td>
+  <td>&nbsp;<td>
+  </tr></table>
+</td></tr>
+<tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+</table>
+</body>
+</html>

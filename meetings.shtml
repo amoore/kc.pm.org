@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>KC Perl Mongers - News</title>
+  <link rel="stylesheet" href="kcpm.css" type="text/css">
+  <!--#include virtual="meta_tags" -->
+</head>
+<body>
+<table class="doc_frame" width=650>
+<tr><td><!--#include virtual="header.shtml"--></td></tr>
+<tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+<tr><td>
+  <table><tr>
+  <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+  <td class="text_frame"><div class="text_frame"> 
+
+    <h1>Upcoming Meetings</h1>
+
+    <p class="leading">Meetings are generally the second Tuesday of
+    each month at 7pm. We currently meet at <a
+    href="http://www.barleysbrewhaus.com/">Barley's Brewhaus</a> in
+    Shawnee at 16649 Midland Drive, the southeast corner of Midland
+    and Renner, just east of I-435. There's a wider variety of food
+    than at our previous meeting location, and they serve
+    beer. Underage perl mongers are still allowed in, though, so don't
+    let that keep you away. Just look for us in the back, by the pool
+    tables. We'll have a couple of hightop tables pushed together.
+
+    <p class="leading">New members are always welcome. Any potential
+    attendees are encouraged to check the mailing list to see if we're
+    really meeting and to encourage those of us who are forgetful.</p>
+
+
+  </div></td>
+  <td>&nbsp;<td>
+  </tr></table>
+</td></tr>
+<tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+</table>
+</body>
+</html>

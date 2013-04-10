@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>KC Perl Mongers - Contact</title>
+  <link rel="stylesheet" href="kcpm.css" type="text/css">
+  <!--#include virtual="meta_tags" -->
+</head>
+<body>
+<table class="doc_frame" width=650>
+<tr><td><!--#include virtual="header.shtml"--></td></tr>
+<tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+<tr><td>
+  <table><tr>
+  <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+  <td class="text_frame"><div class="text_frame"> 
+    <h1>Mailing List Address</h1>
+
+    <p class="leading">Note: You must be a subscribed member to be able 
+    to post to the group.</p>
+
+    <ul>
+     <li>Posting address: kc@mail.pm.org</li>
+     <li><a href="http://mail.pm.org/pipermail/kc/">Maling list archives</a></li>
+     <li><a href="http://mail.pm.org/mailman/listinfo/kc">Subscription and Account Management</a></li>
+    </ul>
+
+    <h1>IRC:</h1>
+
+    <p class="leading">Some kc.pm.org members are occasionally on
+    #kcpm on irc.perl.org</p>
+
+    <h1>Prominent kc.pm Members:</h1>
+    <p>
+    David Nicol: &lt;davidnicol at gmail dot com&gt;<br />
+    Garrett Goebel: &lt;ggoebel at cpan dot org&gt;<br />
+    Andrew Moore: &lt;amoore at mooresystems dot com&gt;<br />
+    </p>
+
+    <p class="leading">Email them if you have questions, requests or
+    if you are in need of assistance that you can't address through
+    the mailing list</p>
+
+  </div></td>
+  <td>&nbsp;<td>
+  </tr></table>
+</td></tr>
+<tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+</table>
+</body>
+</html>

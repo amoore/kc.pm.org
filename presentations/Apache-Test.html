@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:awml="http://www.abisource.com/awml.dtd">
+ <head>
+  <!-- ================================================================================  -->
+  <!-- This HTML file was created by AbiWord.                                            -->
+  <!-- AbiWord is a free, Open Source word processor.                                    -->
+  <!-- More information about AbiWord is available at http://www.abisource.com                -->
+  <!-- ================================================================================  -->
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>/home/ggoebel/Apache-Test.html</title>
+  <style type="text/css">
+   <!--
+@media print {
+	body {
+		padding-top: 0.500000in;
+		padding-bottom: 0.500000in;
+		padding-left: 0.750000in;
+		padding-right: 0.750000in;
+	}
+}
+body {
+	text-decoration: none;
+	text-indent: 0in;
+	text-align: left;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	font-size: 12pt;
+	font-style: normal;
+	widows: 2;
+	font-family: 'Bookman Old Style';
+}
+table {
+	width: 100%;
+}
+td {
+	border-collapse: collapse;
+	text-align: left;
+	vertical-align: top;
+}
+p, h1, h2, h3, li {
+	color: #000000;
+	font-family: 'Bookman Old Style';
+	font-size: 12pt;
+	text-align: left;
+	vertical-align: normal;
+}
+*.Body_Text {
+}
+p {margin-top: 10px }
+h1 {
+	font-family: 'Arial';
+	font-size: 18pt;
+	font-weight: bold;
+	margin-bottom: 0.0417in;
+	margin-top: 0.3056in;
+}
+h2 {
+	font-family: 'Arial';
+	font-size: 16pt;
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 0.0417in;
+	margin-top: 0.3056in;
+}
+     -->
+  </style>
+ </head>
+ <body>
+  <div>
+   <p dir="ltr" style="text-align: center; margin-bottom: 0.0000in; margin-top: 0.0000in; margin-right: 0.0000in"><span style="font-size: 24pt">Testing with Apache::Test</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">When learning about mod_perl and Apache, it helps to apply what you've studied by writing your own handlers. In this vein, I set out to write a set of modules to provide comprehensive access, authentication and authorization functionality. Where are these wondrous modules? -It's all about the journey itself right, not whether or not the destination is reached?</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">Where better to start than a simple translation phase handler to set a session identifier in a cookie, or failing that embedded in the url itself? The fruits of that labor, AxS::Session, are listed in the next section.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">Once you've written your Apache module, exposed it to a bit of peer review, and cleaned it up until it's presentable... Is it ready to be shared with the CPAN masses? ...Did you write any tests? What? You say, Apache modules are nigh untestable? Not anymore! With Stas Beckman's Apache::Test framework in hand I hope to show by example how it can be done.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">In short, <span style="font-family: 'Arial'">Apache::Test provides a framework for testing Apache based applications and components. The framework provides a self-contained environment for running Apache with test specific configurations and provides some additional HTTP testing tools. All of which is accessible via the familiar "make test" procedure most people already use when downloading and installing modules from CPAN.</span></p>
+   <h1 dir="ltr" style="text-align: left; margin-bottom: 0.0417in; margin-top: 0.3056in; margin-right: 0.0000in">AxS::Session </h1>
+   <h2 dir="ltr" style="text-align: left; margin-bottom: 0.0417in; margin-top: 0.3056in; margin-right: 0.0000in">Synopsis</h2>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">AxS::Session is a mod_perl translation phase handler. It generates unique session identifiers which are set and retrieved from cookies or embedded within URLs. The identifier is then accessible via the Apache request object for the life of the request. The most common use of unique session identifiers is to serve as a key for the storage of persistent client data.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">Add the following to your httpd.conf (or equivalent) and restart apache:</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-family: 'Courier New'">PerlModule AxS::Session</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-family: 'Courier New'">PerlTransHandler AxS::Session</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Courier New'">And in code executed after the translation phase:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-family: 'Courier New'">my $session_id = $r-&gt;notes('AxS_SESSION');</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Courier New'"><br /></span></p>
+   <table cellpadding="1" border="1" rules="all" style="border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px">
+    <colgroup width="4.447143%" span="1" />
+    <colgroup width="95.388571%" span="1" />
+    <tbody style="border: inherit">
+     <tr style="border: inherit">
+      <td style="border-bottom-color: #000000; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-style: solid; border-left-style: solid; border-right-style: solid; border-top-style: solid; border-bottom-width: 0.000000in; border-left-width: 0.000000in; border-right-width: 0.000000in; border-top-width: 0.000000in">
+<pre>
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+</pre>
+      </td>
+      <td style="border-bottom-color: #000000; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-style: solid; border-left-style: solid; border-right-style: solid; border-top-style: solid; border-bottom-width: 0.000000in; border-left-width: 0.000000in; border-right-width: 0.000000in; border-top-width: 0.000000in">
+<pre>
+package AxS::Session;
+use Digest::MD5 qw(md5_hex);
+use Apache::Constants qw(DECLINED REDIRECT OK);
+
+$VERSION = '0.03';
+$COOKIE  = $PATH = 1;             # Support embedding session identifier in
+$EXPIRE  = 24 * 60 * 60;          # seconds in 24 hours
+$NAME    = 'AxS_SESSION';
+$MATCH   = undef; # qr/\.html?$/; # session id's only for matching uri's
+
+sub handler {
+  my $r = shift;
+  return DECLINED  unless $r-&gt;is_initial_req;
+  my ($id, %args);
+  %args = $r-&gt;args;
+
+  if ($COOKIE) {
+    my $h = $r-&gt;header_in('Cookie');
+    if ($h) {
+      /^\Q$NAME\E=([0-9a-f]{32})$/ and $id = $1 and last  for split /;\s*/, $h;
+    }
+    $r-&gt;notes('AxS_COOKIE' =&gt; $id ? 1 : 0);
+    if ($id and exists $args{'CookieCheck'}) {
+      delete $args{'CookieCheck'}; # leave a clean uri
+      my $q = join ';', map {"$_=$args{$_}"} keys %args;
+      $r-&gt;header_out('Location', $r-&gt;uri . ($q ? '?' . $q : ''));
+      return REDIRECT
+    }
+  }
+
+  if ($PATH) { # relative path css, etc. need id pruned from uri regardless
+    $id = $1 and $r-&gt;uri("$2")  if $r-&gt;uri =~ m#^/([0-9a-f]{32})(/.*)#;
+  }
+
+  if ($id) {
+    $r-&gt;notes($NAME =&gt; $id);
+    return DECLINED;
+  }
+
+  return DECLINED  if defined $MATCH and $r-&gt;uri !~ m/$MATCH/;
+
+  $id = md5_hex($$.time.{}.rand()); # Make session id
+
+  if (not exists $args{'CookieCheck'}) {
+    $r-&gt;err_header_out('Set-Cookie', 
+                       join(';',
+                       $NAME .'=' . $id,
+                       'expires=' . scalar gmtime(time + $EXPIRE),
+                       'path=/',
+                       'domain='  . $r-&gt;get_server_name,));
+    $r-&gt;header_out('Location',
+                   $r-&gt;uri.'?'.($r-&gt;args?$r-&gt;args.';':'').'CookieCheck=1');
+  } else { # mangle uri and redirect
+    delete $args{'CookieCheck'};
+    my $q = join ';', map {"$_=$args{$_}"} keys %args;
+    $r-&gt;header_out('Location', "/$id" . $r-&gt;uri . ($q ? '?' . $q : ''));
+  }
+  return REDIRECT;
+}
+1;
+__END__
+</pre>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+
+   <h2 dir="ltr" style="text-align: left; margin-bottom: 0.0417in; margin-top: 0.3056in; margin-right: 0.0000in">Code Commentary</h2>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">In the case that cookies are supported, the first request from a client for the website will generate 2 redirects. The first redirect attempts to set a session identifier assignment via a cookie, leaving a trace of this attempt in the query string. The second redirect is required to return the query string to its initial state. All subsequent request do not require redirects. At least until the cookie expires.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">When cookies aren't supported, the second redirect will instead issue a redirect for a URL with an embedded session identifier. If AxS::Session cookie support were explicitly disabled for all clients, only one redirect would be necessary. With URL embedded identifiers, it is of paramount importance that pages served dynamically rewrite references to local URLs to perpetuate the session. Whereas cookies persist between sessions, it is likely that unless bookmarked, each initial access to the site by a browser will require at least one redirect.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 1-5 Set the package name, version, and included a few useful modules</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 6-9 Set up a few global configuration variables, setting the stage for a future version to rework them into Apache Configuration Directives. $COOKIE and $PATH if true, enable insertion of session identifiers into cookies and URLs respectively. $EXPIRE sets how long generated cookies will last. $NAME is the key by which the session identifier may be recalled from $r-&gt;notes. And $MATCH, a regex which the URL must match before a session identifier will be generated. By default, all URLs are candidates for session identifiers. If you don't have a separate image server or web server for handling static files this may not be desirable. In such cases, you should set $MATCH to match whatever URLs you intend to handle session specific requests.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 11-15 start the handler off on a good footing. Handlers receive the Apache request object which by convention is assigned to $r. Line 13 checks to make sure this is the first time it has been invoked for this request, and short-circuiting to avoid unnecessary work if otherwise. Internal redirects are an example of where this code would be exercised. Next lexical variables $id and %args are created, and %args is given the query string's contents if any.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 17-22 look for a pre-existing cookie session identifier in the request's headers; short-circuiting as soon as it is found. If an identifier is found, it is stored in $id. Last, we stash a note away in $r-&gt;notes(AxS_Cookie) letting us know if cookies are enabled or not. Something that'll be useful later when you're deciding whether or not to rewrite references to local URLs to embed the session identifier.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 23-28 are a bit tricky. If a session identifier wasn't found in a cookie on the first pass, code a little further down is going try to set the cookie along with an argument in the query string and issue a redirect. The reason for this, is that there is no clear way to determine if cookies are enabled other than to try setting one. So, these lines use the 'CookieCheck' parameter to recognize the second pass where we've explicitly attempted to set a cookie. If the session identifier is found, we redirect the request back to a cleaned-up URL (sans 'CookieCheck').</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 31-33 To protect ourselves from relative URLs, we check and remove session identifiers from all URLs not just those that match $MATCH. If an identifier was found it is stored in $id.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 35-38 If a session identifier has been found, set the request note and return DECLINED to let the request pass through to the next handler. </p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">line 40 Return DECLINED if the URL doesn't match MATCH. I.e., only allow those requests to fall through which we wish to have session identifiers.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">line 42 Borrowed from Apache::Session, this line uses the Digest::MD5 module to create and assign a unique identifier to $id. The md5 hash is based on the process id, current time, the memory address of an anonymous hash, and a random number.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in">lines 44-58 Here's where the tricky stuff I alluded to earlier happens. If this is the first pass through and a session identifier wasn't found, we set the cookie and add 'CookieCheck' to the query string in the Location field in the header so we can recognize the attempt. On the other hand, if we reached this point with 'CookieCheck' in the query string, then we know cookies are unavailable. So we add the identifier to the URL and remove 'CookieCheck' from the Location field in the header. Finally, we issue our redirect.</p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-weight: bold; font-size: 18pt; font-family: 'Arial'"><br />Apache::Test</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <h2 dir="ltr" style="text-align: left; margin-bottom: 0.0417in; margin-top: 0.3056in; margin-right: 0.0000in">Why Test?</h2>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">It is all to easy to hammer out a bit of code for a feature, try it out to see if it works, and move on to the next feature. When we build things we like to see them work. It is much more difficult to convince many programmers to put the code creator hat aside, and put the test demolition hat in its place. But it is important. </span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">When you're testing, its your job to break the code. That gives you a fundamentally different perspective. In many cases it is advisable to have a different person test code than the one who wrote it. Because for many people it is simply too hard for them to look at the code they just wrote and try to tear it apart.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Still, that's exactly what I'm advising you do. And many experienced programmers will back me up here when I say you'll thank yourself for it. Like many things, there is a balance to be had... but in general, the easier it is to regularly and thoroughly test your code, the faster development will go. ...Really! I'm not kidding.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">When you're finding more bugs up-front, that pays dividends when you find yourself spending less time backtracking through old code you hardly recognize. When you facilitate the ability of your code's user base to run tests on their varied configurations you'll get better feedback and bug reports. Not to mention access to cross-platform feedback you'd be hard pressed to get otherwise. And it is easier to track down bugs as new features are introduced.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">So I was already preaching to the choir, or perhaps I've got you half convinced. Or maybe its just late at night, and you were hoping you'd already be asleep by now? So how do you test an Apache mod_perl module?</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <h2 dir="ltr" style="text-align: left; margin-bottom: 0.0417in; margin-top: 0.3056in; margin-right: 0.0000in">Getting Started with Apache::Test</h2>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Open a shell, make your way to a comfortable location and type:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+<pre>
+
+    h2xs -AXn AxS::Session
+
+</pre>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">h2xs is utility used originally to convert C header files into Perl extension (XS) code along with boiler plate files for new modules. Forgoing the C and XS aspects, which is what the -AX flags do, it is very useful when you wish to create a module. Executing the above results in the following:</span></p>
+<pre>
+
+    Writing AxS/Session/Session.pm
+    Writing AxS/Session/Makefile.PL
+    Writing AxS/Session/README
+    Writing AxS/Session/test.pl
+    Writing AxS/Session/Changes
+    Writing AxS/Session/MANIFEST
+
+</pre>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">To adapt the module boiler plate to support Apache::Test you need to do a few things. First delete test.pl. Apache::Test needs its own test directory. Next we need to shuffle file locations about a bit to facilitate Apache accessing the module during testing.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Move Session up to the same directory as its parent AxS, then delete AxS. Make a 'lib/AxS' directory under Session, and move Session.pm into it. You can then cut and paste the code listing for AxS::Session into Session.pm.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Next, modify the standard Makefile.PL to enable Apache::Test as follows.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Before:</span></p>
+<pre>
+    use 5.008;
+    use ExtUtils::MakeMaker;
+    # See lib/ExtUtils/MakeMaker.pm for details of how to influence
+    # the contents of the Makefile that is written.
+    WriteMakefile(
+        'NAME'         =&gt; 'AxS::Session',
+        'VERSION_FROM' =&gt; 'Session.pm', # finds $VERSION
+        'PREREQ_PM'    =&gt; {}, # e.g., Module::Name =&gt; 1.1
+        ($] &gt;= 5.005 ?    ## Add these new keywords supported since 5.005
+          (ABSTRACT_FROM =&gt; 'Session.pm', # retrieve abstract from module
+           AUTHOR        =&gt; 'Garrett Goebel &lt;garrett at scriptpro dot com&gt;') : ()),
+    );
+</pre>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">After:</span></p>
+<pre>
+    use 5.008;
+    use ExtUtils::MakeMaker;
+    # See lib/ExtUtils/MakeMaker.pm for details of how to influence
+    # the contents of the Makefile that is written.
+    
+    use lib qw(../blib/lib lib);
+    use Apache::TestMM qw(test clean);
+    use Apache::TestRunPerl ();
+    
+    Apache::TestMM::filter_args();
+    Apache::TestRunPerl-&gt;generate_script();
+    
+    WriteMakefile(
+        'NAME'	 =&gt; 'AxS::Session',
+        'VERSION_FROM'	=&gt; 'lib/AxS/Session.pm', # finds $VERSION
+        'PREREQ_PM'	 =&gt; { 'Apache::Test' =&gt; ''},
+        'clean'             =&gt; { 'FILES' =&gt; 't/Test' },
+        ($] &gt;= 5.005 ?
+          (ABSTRACT_FROM =&gt; 'lib/AxS/Session.pm',
+           AUTHOR     =&gt; 'Garrett Goebel &lt;garrett at scriptpro dot com&gt;') : ()),
+</pre>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">);</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Next, create the t/TEST.PL file with the following contents:</span></p>
+<pre>
+
+    #file:t/TEST.PL
+    #--------------
+    #!perl
+    use strict;
+    use warnings FATAL =&gt; 'all';
+    use lib qw(lib);
+    use Apache::TestRunPerl ();
+
+    Apache::TestRunPerl-&gt;new-&gt;run(@ARGV);
+
+</pre>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">You may notice the line "#!perl". When t/TEST.PL is used to generate t/TEST this will be replace with the location of the version of Perl used.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Apache needs a minimal configuration. Apache::Test provides the following defaults:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">ServerRoot	&nbsp;t/</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">DocumentRoot	t/htdocs</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">ErrorLog	&nbsp;t/logs/error_log</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">Listen	&nbsp;8529</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">You can supplement the defaults with custom configuration directives. Create a directory t/conf. In this directory create an extra.conf.in file using the following listing. extra.conf.in can make use of the same directives you would find in httpd.conf. In fact, it is pulled into the httpd.conf via an Include directive.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">#file:t/conf/extra.conf.in</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">#-------------------------</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'"># this file will be Include-d by @ServerRoot@/httpd.conf</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">PerlModule AxS::Session</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">PerlTransHandler AxS::Session</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">The pain is now over. Get started writing tests as you would for Test, Test::More, or Test::Harness. For example, create a file t/1.t:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">use Test;</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">BEGIN { plan tests =&gt; 1 };</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">use AxS::Session;</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">ok(1); # If we made it this far, we're ok.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Now recite the familiar mantra:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">perl Makefile.PL</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">make</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">make test</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">to see Apache::Test in action.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">rx Session # make test</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">/usr/bin/perl -Iblib/arch -Iblib/lib \</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">t/TEST -clean</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** setting ulimit to allow core files</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">ulimit -c unlimited; t/TEST -clean</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">APACHE_USER= APACHE_GROUP= APACHE_PORT= APACHE= APXS= \</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">/usr/bin/perl -Iblib/arch -Iblib/lib \</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">t/TEST -verbose=0</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** setting ulimit to allow core files</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">ulimit -c unlimited; t/TEST -verbose=0</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** root mode: changing the files ownership to 'nobody' (65534:65534)</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** sudo -u '#65534' /usr/bin/perl -e 'print -r "/home/ggoebel/src/AxS/Session/t" &amp;&amp; &nbsp;-w _ &amp;&amp; -x _ ? "OK" : "NOK"'</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'"> </span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** result: OK</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">/usr/sbin/apache -X -d /home/ggoebel/src/AxS/Session/t -f /home/ggoebel/src/AxS/Session/t/conf/httpd.conf -DAPACHE1</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">using Apache/1.3.28</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'"> </span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">waiting for server to start: .</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">waiting for server to start: ok (waited 0 secs)</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">server localhost:8529 started</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">1....ok</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">All tests successful.</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">Files=1, Tests=1, &nbsp;0 wallclock secs ( 0.06 cusr + &nbsp;0.02 csys = &nbsp;0.08 CPU)</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** root mode: restoring the original files ownership</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">*** server localhost:8529 shutdown</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">t/TEST is generated after "perl Makefile.PL" as a result of the line</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">Apache::TestRunPerl-&gt;generate_script();</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">So it isn't strictly necessary to do a "make test" to execute the test suite. A simple "t/TEST" will suffice. Apache::Test's t/TEST can be called with a plethora of options that can facilitate debugging:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">t/TEST -start-httpd</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">t/TEST -get /index.html</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">t/TEST -stop-httpd</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">To see the full list of what's available, try:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">t/TEST -help</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">For most tests however, you'll want to use Apache::Test instead of Test, Test::More, and the like. Rest assured however that Apache::Test gives you all that you were used to and more. &nbsp;Create a t/2.t file containing the following:</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">use Apache::Test;</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">use Apache::TestRequest;</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">plan tests =&gt; 1, (have_lwp);</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">my $url = '/index.html';</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">my $response = GET $url;</span></p>
+   <p class="Body_Text" awml:style="Body Text" dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in; margin-left: 0.5000in"><span style="font-size: 10pt; font-family: 'Courier New'">ok $response-&gt;code == 200;</span></p>
+   <h1 dir="ltr" style="text-align: left; margin-bottom: 0.0417in; margin-top: 0.3056in; margin-right: 0.0000in">Summary</h1>
+   <p dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">Admittedly, I just scratched the surface. But hopefully I've scratched your itch, and you'll be wanting to know more. The best references for Apache::Test information are:</span></p>
+   <p dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"></p>
+   <ul>
+    <li dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">	http://perl.apache.org/docs/general/testing/testing.html</span></li>
+    <li dir="ltr" style="text-align: left; margin-bottom: 0.0000in; margin-right: 0.0000in"><span style="font-family: 'Arial'">	http://conferences.oreillynet.com/presentations/os2003/young_test.ppt</span></li>
+   </ul>
+  </div>
+ </body>
+</html>

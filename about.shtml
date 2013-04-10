@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>KC Perl Mongers - About</title>
+  <link rel="stylesheet" href="kcpm.css" type="text/css">
+  <!--#include virtual="meta_tags" -->
+</head>
+<body>
+<table class="doc_frame" width=650>
+<tr><td><!--#include virtual="header.shtml"--></td></tr>
+<tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+<tr><td>
+  <table><tr>
+  <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+  <td class="text_frame"><div class="text_frame"> 
+    <h1>About the Kansas City Perl Mongers</h1>
+
+    <p class="leading">The Kansas City Perl Mongers consists 
+    of a diverse group of individuals with a unifying interest 
+    in expanding our knowledge of Perl. We encourage 
+    participation by individuals of all skill levels 
+    relating to Perl.</p>
+
+    <p class="leading">We meet on the second Tuesday of the
+    month from 7-9 PM. The main mode of communication is by
+    way of the <a href="contact.htm">mailing list</a>.</p>
+
+    <p class="leading">To learn more about the Perl Mongers 
+    organization please visit: <a href=
+    "http://www.pm.org">http://www.perlmongers.org/</a></p>
+  </div></td>
+  <td>&nbsp;<td>
+  </tr></table>
+</td></tr>
+<tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+</table>
+</body>
+</html>

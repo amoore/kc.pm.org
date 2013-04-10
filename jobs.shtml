@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>KC Perl Mongers - Jobs</title>
+  <link rel="stylesheet" href="kcpm.css" type="text/css">
+  <!--#include virtual="meta_tags" -->
+</head>
+<body>
+<table class="doc_frame" width=650>
+<tr><td><!--#include virtual="header.shtml"--></td></tr>
+<tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+<tr><td>
+  <table><tr>
+  <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+  <td class="text_frame"><div class="text_frame"> 
+
+    <ul>
+      <li><a href="#All">All</a></li>
+      <li><a href="#mod_perl">Mod_Perl</a></li>
+      <li><a href="#mason">Mason</a></li>
+      <li><a href="#telecommute">Telecommute</a></li>
+    </ul>
+
+    <table>
+    <tr><td class="menu_header"><a came="All">All</a></td></tr>
+    <tr><td class="menu_block">
+      <script language="JavaScript" 
+              src="http://jobs.perl.org/rss/standard.js?limit=5"></script>
+    </td></tr>
+
+    <tr><td class="menu_header"><a name="Mod_Perl">Mod_Perl</a></td></tr>
+    <tr><td class="menu_block">
+      <script language="JavaScript" 
+              src="http://jobs.perl.org/rss/mod_perl.js?limit=5"></script>
+    </td></tr>
+
+    <tr><td class="menu_header"><a name="mason">Mason</a></td></tr>
+    <tr><td class="menu_block">
+      <script language="JavaScript" 
+              src="http://jobs.perl.org/rss/mason.js?limit=5"></script>
+    </td></tr>
+
+    <tr><td class="menu_header"><a name="telecommute">Telecommute</a></td></tr>
+    <tr><td class="menu_block">
+      <script language="JavaScript" 
+              src="http://jobs.perl.org/rss/telecommute.js?limit=5"></script>
+    </td></tr>
+
+    </table>
+
+  </div></td>
+  <td>&nbsp;<td>
+  </tr></table>
+
+</td></tr>
+<tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+</table>
+</body>
+</html>

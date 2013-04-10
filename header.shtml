@@ -1,0 +1,11 @@
+  <table width=100%> 
+    <tr><td class="head_pri">&nbsp;</td></tr> 
+    <tr><td class="head_sec">&nbsp;</td></tr>
+    <tr><td class="head_pri">
+      <table width=100%><tr> 
+        <td><img src="camel.gif"></td>
+        <td><div class="head_text">Kansas City<br> &nbsp; perl mongers</div></td>
+        <td>&nbsp;</td>
+      </tr></table>
+    </tr></td>
+  </table>

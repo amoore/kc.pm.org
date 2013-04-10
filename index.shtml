@@ -1,0 +1,40 @@
+<html> 
+<head>
+  <title>KC Perl Mongers - Home Page</title>
+  <link rel="stylesheet" href="kcpm.css" type="text/css">
+  <!--#include virtual="meta_tags" -->
+</head>
+<body>
+<table class="doc_frame" width=650>
+<tr><td><!--#include virtual="header.shtml"--></td></tr>
+<tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+<tr><td>
+  <table><tr>
+  <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+  <td class="text_frame"><div class="text_frame"> 
+
+    <p class="leading">Whether you are a seasoned Perl programmer or a
+    'newbie', please feel free to participate on the <a href=
+    "http://www.pm.org/mailman/listinfo/kc">KC perl mongers mailing
+    list</a> or join us at one of our irregularly scheduled meetings.
+    </p>
+
+    <p class="leading">Meetings are generally the second Tuesday of
+    each month at 7pm. We currently meet at <a
+    href="http://www.barleysbrewhaus.com/">Barley's Brewhaus</a> in
+    Shawnee at 16649 Midland Drive, the southeast corner of Midland
+    and Renner, just east of I-435. There's a wider variety of food
+    than at our previous meeting location, and they serve
+    beer. Underage perl mongers are still allowed in, though, so don't
+    let that keep you away. We usually get a few hightop tables in
+    the back of the restaurant, past the bar to the left, near the
+    pool tables. New members are always welcome!</p>
+
+  </div></td>
+  <td>&nbsp;<td>
+  </tr></table>
+</td></tr>
+<tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html> 
+  <head>
+    <title>KC Perl Mongers - Hiring a Perl Developer</title>
+    <link rel="stylesheet" href="kcpm.css" type="text/css">
+      <!--#include virtual="meta_tags" -->
+  </head>
+  <body>
+    <table class="doc_frame" width=650>
+      <tr><td><!--#include virtual="header.shtml"--></td></tr>
+      <tr><td class="menu_item"><!--#include virtual="menu_top"--></td></tr> 
+      <tr><td>
+          <table><tr>
+              <td class="menu_frame"><!--#include virtual="menu_side"--></td>
+              <td class="text_frame"><div class="text_frame"> 
+                  
+                  <p class="leading">The best place to post job
+                  descriptions of open positions for perl developers
+                  is at <a
+                  href="http://jobs.perl.org">jobs.perl.org</a>. This
+                  is the main website for people looking for perl work
+                  and looking to fill perl jobs. It's an invaluable
+                  resource, and local developers check it all the
+                  time. The job postings also show up on our <a
+                  href="/jobs.shtml">local jobs page</a>.
+                  </p>
+
+                  <p class="leading">If the position is local to the
+                  Kansas City area, you may also want to have the
+                  description posted on our mailing list. Since you
+                  can't post to the list unless you're subscribed, you
+                  should send them on to the group moderator: Andrew
+                  Moore &lt;amoore at cpan dot org&gt; and he will
+                  forward them to the rest of the list.
+                  </p>
+                  
+                  <p class="leading">To improve your odds odds of
+                  developing interest from qualified local candidates,
+                  here are some things that may help you out:
+                    <ul>
+                      <li>Tell us as much about the company as
+                        possible. Since you may not want to mention the
+                        company name, at least explain how large the
+                        company is and what industry it is in.
+                      </li>
+                      <li>Tell us as much about the team as
+                      possible. Is it a large team that has been
+                      around for a while? Is it a small and new team
+                      that you're looking for someone to lead?
+                      </li>
+                      <li>Tell as much about the project as possible?
+                      Is this a new application that you need someone
+                      to design and implement from scratch? Is it an
+                      old application that needs to have some large
+                      features added to it? Is this mostly maintenance
+                      programming?
+                      </li>
+                      <li>Tell as much as you can about the code
+                        itself.  Can you tell us how many lines of
+                        code it is? Does it follow any well-defined
+                        coding standards? Is it object oriented? Does
+                        it run on linux or windows? Under apache, and
+                        maybe mod_perl?
+                      </li>
+                      <li>Can you describe the ideal candidate?</li>
+                      <li>Why should I take this position?</li>
+                    </ul>
+                    If you can address as many of these points as
+                    possible, you will have better luck receiving
+                    interest to your job posting.
+
+                  </p>
+
+                </div></td>
+              <td>&nbsp;<td>
+            </tr></table>
+        </td></tr>
+      <tr><td class="footer"><!--#include virtual="footer"--></td></tr>
+    </table>
+  </body>
+</html>

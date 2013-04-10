@@ -1,0 +1,27 @@
+    <table>
+
+    <tr><td class="menu_header">Local</td></tr>
+    <tr><td class="menu_block">
+
+      <div class="menu_item">
+        <a href="http://www.kclug.org/">kclug</a>
+      </div>
+    </td></tr>
+
+    <tr><td class="menu_header">Perl</td></tr>
+    <tr><td class="menu_block">
+      <div class="menu_item"><a href="http://blogs.perl.org/">Perl blogs</a></div>
+      <div class="menu_item"><a href="http://perlmonks.org/">PerlMonks</a></div>
+      <div class="menu_item"><a href="http://search.cpan.org">CPAN</a></div>
+      <div class="menu_item"><a href="http://perl.com/">Perl.com</a></div>
+    </td></tr>
+
+    <tr><td class="menu_block">
+      <div class="menu_item">
+        <a href="http://www.oreilly.com/safari/ug">
+          <img src="120x240-safari_ug.gif" height="240" width="120" 
+border="0">
+        </a>
+      </div>
+    </td></tr>
+    </table>
